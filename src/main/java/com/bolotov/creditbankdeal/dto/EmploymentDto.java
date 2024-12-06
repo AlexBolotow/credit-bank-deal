@@ -2,8 +2,6 @@ package com.bolotov.creditbankdeal.dto;
 
 import com.bolotov.creditbankdeal.enums.EmploymentPosition;
 import com.bolotov.creditbankdeal.enums.EmploymentStatus;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
