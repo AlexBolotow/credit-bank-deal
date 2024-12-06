@@ -36,5 +36,7 @@ public class ClientDto {
     Gender gender;
     MaritalStatus maritalStatus;
     Integer dependentAmount;
-    Passport passport;
+    PassportDto passport;
+    EmploymentDto employment;
+    String accountNumber;
 }

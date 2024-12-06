@@ -1,5 +1,6 @@
 package com.bolotov.creditbankdeal.dto;
 
+import com.bolotov.creditbankdeal.enums.CreditStatus;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,7 +22,8 @@ public class CreditDto {
     BigDecimal monthlyPayment;
     BigDecimal rate;
     BigDecimal psk;
-    Boolean isInsuranceEnabled;
-    Boolean isSalaryClient;
+    Boolean insuranceEnabled;
+    Boolean salaryClient;
     List<PaymentScheduleElementDto> paymentSchedule;
+    CreditStatus creditStatus;
 }
