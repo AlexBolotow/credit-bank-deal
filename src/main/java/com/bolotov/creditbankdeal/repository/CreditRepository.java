@@ -1,9 +1,9 @@
 package com.bolotov.creditbankdeal.repository;
 
-import com.bolotov.creditbankdeal.entity.Passport;
+import com.bolotov.creditbankdeal.entity.Credit;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.UUID;
 
-public interface PassportRepository extends CrudRepository<Passport, UUID> {
+public interface CreditRepository extends CrudRepository<Credit, UUID> {
 }
