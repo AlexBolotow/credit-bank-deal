@@ -19,8 +19,8 @@ import java.util.UUID;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class EmploymentDto {
     UUID id;
-    EmploymentStatus status;
-    String employerInn;
+    EmploymentStatus employmentStatus;
+    String employerINN;
     BigDecimal salary;
     EmploymentPosition position;
     Integer workExperienceTotal;

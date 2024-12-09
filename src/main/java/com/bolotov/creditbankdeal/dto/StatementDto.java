@@ -25,7 +25,7 @@ public class StatementDto {
     Credit credit;
     ApplicationStatus status;
     LocalDateTime creationDate;
-    CreditDto appliedOffer;
+    LoanOfferDto appliedOffer;
     LocalDateTime signDate;
     Integer sesCode;
     List<StatusHistory> statusHistory;

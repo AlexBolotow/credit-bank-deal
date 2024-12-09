@@ -1,6 +1,6 @@
 package com.bolotov.creditbankdeal.entity;
 
-import com.bolotov.creditbankdeal.dto.CreditDto;
+import com.bolotov.creditbankdeal.dto.LoanOfferDto;
 import com.bolotov.creditbankdeal.dto.StatusHistory;
 import com.bolotov.creditbankdeal.enums.ApplicationStatus;
 import jakarta.persistence.Column;
@@ -22,6 +22,7 @@ import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -52,12 +53,12 @@ public class Statement {
     LocalDateTime creationDate;
 
     @JdbcTypeCode(SqlTypes.JSON)
-    CreditDto appliedOffer;
+    LoanOfferDto appliedOffer;
 
     LocalDateTime signDate;
 
     Integer sesCode;
 
     @JdbcTypeCode(SqlTypes.JSON)
-    List<StatusHistory> statusHistory;
+    List<StatusHistory> statusHistory = new ArrayList<>();
 }

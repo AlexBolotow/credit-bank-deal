@@ -33,9 +33,11 @@ public class Employment {
     UUID id;
 
     @Enumerated(EnumType.STRING)
-    EmploymentStatus status;
+    @Column(name = "status")
+    EmploymentStatus employmentStatus;
 
-    String employerInn;
+    @Column(name = "employer_inn")
+    String employerINN;
 
     BigDecimal salary;
 

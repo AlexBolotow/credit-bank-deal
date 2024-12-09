@@ -53,7 +53,7 @@ public class Client {
     Integer dependentAmount;
 
     @OneToOne
-    @JoinColumn(name = "passport_id", referencedColumnName = "passport_id_uuid")
+    @JoinColumn(name = "passport_id", referencedColumnName = "passport_id_uuid", unique = true)
     Passport passport;
 
     @OneToOne

@@ -1,5 +1,6 @@
 package com.bolotov.creditbankdeal.dto;
 
+import com.bolotov.creditbankdeal.enums.ApplicationStatus;
 import com.bolotov.creditbankdeal.enums.ChangeType;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -16,10 +17,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class StatusHistory {
-
-    String status;
-
+    ApplicationStatus status;
     LocalDateTime time;
-
     ChangeType changeType;
 }
