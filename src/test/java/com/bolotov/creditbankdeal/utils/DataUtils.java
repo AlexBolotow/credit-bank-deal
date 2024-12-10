@@ -134,8 +134,8 @@ public class DataUtils {
                 .build();
     }
 
-    public static CreditDto getCreditDto() {
-        return CreditDto.builder()
+    public static Credit getCreditDto() {
+        return Credit.builder()
                 .amount(BigDecimal.valueOf(20000.0))
                 .term(1)
                 .monthlyPayment(BigDecimal.valueOf(1000.0))

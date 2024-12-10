@@ -2,15 +2,18 @@ package com.bolotov.creditbankdeal.mapper;
 
 import com.bolotov.creditbankdeal.dto.CreditDto;
 import com.bolotov.creditbankdeal.entity.Credit;
+import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
+import org.mapstruct.MappingTarget;
+import org.mapstruct.NullValuePropertyMappingStrategy;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface CreditMapper {
-
-    CreditMapper INSTANCE = Mappers.getMapper(CreditMapper.class);
 
     CreditDto toDto(Credit entity);
 
     Credit toEntity(CreditDto dto);
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    void updateEntityFromDto(@MappingTarget Credit entity, CreditDto dto);
 }
