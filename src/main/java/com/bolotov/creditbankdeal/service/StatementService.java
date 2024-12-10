@@ -12,5 +12,7 @@ public interface StatementService {
 
     Statement findStatement(UUID id);
 
+    void updateStatement(UUID id, StatementDto statementDto);
+
     void updateStatementWithAppliedLoanOffer(UUID statementId, LoanOfferDto appliedOffer);
 }

@@ -1,6 +1,5 @@
 package com.bolotov.creditbankdeal.service.impl;
 
-import com.bolotov.creditbankdeal.dto.ClientDto;
 import com.bolotov.creditbankdeal.entity.Client;
 import com.bolotov.creditbankdeal.entity.Employment;
 import com.bolotov.creditbankdeal.entity.Passport;
@@ -34,7 +33,7 @@ public class ClientServiceImpl implements ClientService {
     private final EmploymentMapper employmentMapper;
 
     @Override
-    public Client createClient(ClientDto clientDto) {
+    public Client createClient(com.bolotov.creditbankdeal.dto.ClientDto clientDto) {
         if (clientDto.getPassport() != null) {
             Passport savedPassport = passportService.createPassport(clientDto.getPassport());
             clientDto.setPassport(passportMapper.toDto(savedPassport));
@@ -57,7 +56,7 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public void updateClient(UUID id, ClientDto clientDto) {
+    public void updateClient(UUID id, com.bolotov.creditbankdeal.dto.ClientDto clientDto) {
         Client client = findClient(id);
 
         //upsert passport

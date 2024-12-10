@@ -1,6 +1,5 @@
 package com.bolotov.creditbankdeal.mapper;
 
-import com.bolotov.creditbankdeal.dto.ClientDto;
 import com.bolotov.creditbankdeal.dto.FinishRegistrationRequestDto;
 import com.bolotov.creditbankdeal.dto.LoanStatementRequestDto;
 import com.bolotov.creditbankdeal.entity.Client;
@@ -20,7 +19,7 @@ public interface ClientMapper {
     @Mapping(source = "birthdate", target = "birthdate")
     @Mapping(source = "passportSeries", target = "passport.series")
     @Mapping(source = "passportNumber", target = "passport.number")
-    ClientDto LoanStatementRequestDtoToClientDto(LoanStatementRequestDto requestDto);
+    com.bolotov.creditbankdeal.dto.ClientDto LoanStatementRequestDtoToClientDto(LoanStatementRequestDto requestDto);
 
     @Mapping(source = "gender", target = "gender")
     @Mapping(source = "maritalStatus", target = "maritalStatus")
@@ -29,12 +28,12 @@ public interface ClientMapper {
     @Mapping(source = "passportIssueBranch", target = "passport.issueBranch")
     @Mapping(source = "employment", target = "employment")
     @Mapping(source = "accountNumber", target = "accountNumber")
-    ClientDto FinishRegistrationRequestDtoToClientDto(FinishRegistrationRequestDto finishRequestDtoRequest);
+    com.bolotov.creditbankdeal.dto.ClientDto FinishRegistrationRequestDtoToClientDto(FinishRegistrationRequestDto finishRequestDtoRequest);
 
-    ClientDto toDto(Client entity);
+    com.bolotov.creditbankdeal.dto.ClientDto toDto(Client entity);
 
-    Client toEntity(ClientDto dto);
+    Client toEntity(com.bolotov.creditbankdeal.dto.ClientDto dto);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    void updateEntityFromDto(@MappingTarget Client entity, ClientDto dto);
+    void updateEntityFromDto(@MappingTarget Client entity, com.bolotov.creditbankdeal.dto.ClientDto dto);
 }

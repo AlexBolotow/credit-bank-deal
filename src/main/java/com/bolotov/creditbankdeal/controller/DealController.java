@@ -1,19 +1,21 @@
 package com.bolotov.creditbankdeal.controller;
 
 import com.bolotov.creditbankdeal.client.CalculatorRestClient;
+import com.bolotov.creditbankdeal.dto.ClientDto;
 import com.bolotov.creditbankdeal.dto.CreditDto;
 import com.bolotov.creditbankdeal.dto.FinishRegistrationRequestDto;
 import com.bolotov.creditbankdeal.dto.LoanOfferDto;
 import com.bolotov.creditbankdeal.dto.LoanStatementRequestDto;
 import com.bolotov.creditbankdeal.dto.ScoringDataDto;
 import com.bolotov.creditbankdeal.dto.StatementDto;
-import com.bolotov.creditbankdeal.entity.Client;
 import com.bolotov.creditbankdeal.entity.Statement;
+import com.bolotov.creditbankdeal.enums.CreditStatus;
 import com.bolotov.creditbankdeal.mapper.ClientMapper;
 import com.bolotov.creditbankdeal.mapper.ScoringDataMapper;
 import com.bolotov.creditbankdeal.mapper.StatementMapper;
 import com.bolotov.creditbankdeal.service.ClientService;
 import com.bolotov.creditbankdeal.service.CreditService;
+import com.bolotov.creditbankdeal.service.OfferService;
 import com.bolotov.creditbankdeal.service.StatementService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -35,23 +37,25 @@ public class DealController {
 
     private final StatementService statementService;
 
-    private final CreditService creditService;
+    private final OfferService offerService;
 
     private final CalculatorRestClient calculatorRestClient;
 
     private final ClientMapper clientMapper;
 
+    private final StatementMapper statementMapper;
+
     @PostMapping("/statement")
     public ResponseEntity<List<LoanOfferDto>> getOffers(@RequestBody LoanStatementRequestDto requestDto) {
-        Client createdClient = clientService.createClient(clientMapper.LoanStatementRequestDtoToClientDto(requestDto));
+        ClientDto clientDto = clientMapper.LoanStatementRequestDtoToClientDto(requestDto);
 
-        StatementDto statementToCreate = StatementDto.builder()
-                .client(createdClient)
-                .build();
+        StatementDto statementToCreate = new StatementDto();
+        statementToCreate.setClient(clientDto);
+
         Statement createdStatement = statementService.createStatement(statementToCreate);
 
         List<LoanOfferDto> offers = calculatorRestClient.getOffers(requestDto);
-        offers.forEach(offer -> offer.setStatementId(createdStatement.getId()));
+        offerService.setStatementId(createdStatement.getId(), offers);
 
         return ResponseEntity.ok(offers);
     }
@@ -69,18 +73,20 @@ public class DealController {
     public ResponseEntity<?> calculateCredit(@PathVariable String statementId,
                                              @RequestBody FinishRegistrationRequestDto requestDto) {
         UUID statementUUID = UUID.fromString(statementId);
+        ClientDto clientToUpdate = clientMapper.FinishRegistrationRequestDtoToClientDto(requestDto);
+        clientService.updateClient(statementService.findStatement(statementUUID).getClient().getId(),
+                clientToUpdate);
+
         Statement statement = statementService.findStatement(statementUUID);
-        clientService.updateClient(statement.getClient().getId(),
-                clientMapper.FinishRegistrationRequestDtoToClientDto(requestDto));
-
-        //updated statement
-        statement = statementService.findStatement(statementUUID);
-
         ScoringDataDto scoringDataDto = ScoringDataMapper.INSTANCE.StatementDtoToScoringDataDto(
-                StatementMapper.INSTANCE.toDto(statement));
+                statementMapper.toDto(statement));
 
         CreditDto creditDto = calculatorRestClient.getCredit(scoringDataDto);
-        creditService.createCredit(creditDto);
+        creditDto.setCreditStatus(CreditStatus.CALCULATED);
+
+        StatementDto statementToUpdate = statementMapper.toDto(statement);
+        statementToUpdate.setCredit(creditDto);
+        statementService.updateStatement(statement.getId(), statementToUpdate);
 
         return ResponseEntity.ok("Credit calculated successfully");
     }

@@ -20,7 +20,7 @@ class ClientMapperTest {
     ClientMapper clientMapperUnderTest;
 
     @Test
-    @DisplayName("Test loan statement request mapping to client functionality")
+    @DisplayName("Test loan statement request mapping to clientDto functionality")
     void givenLoanStatementRequestDto_whenToDto_ReturnCorrectClientDto() {
         // given
         LoanStatementRequestDto requestDto = DataUtils.getLoanStatementRequestDtoJohnDoe();
@@ -40,7 +40,7 @@ class ClientMapperTest {
     }
 
     @Test
-    @DisplayName("Test finish registration request mapping to client functionality")
+    @DisplayName("Test finish registration request mapping to clientDto functionality")
     void givenFinishRegistrationRequestDto_whenToDto_ReturnCorrectClientDto() {
         // given
         FinishRegistrationRequestDto requestDto = DataUtils.getFinishRegistrationRequestDto();

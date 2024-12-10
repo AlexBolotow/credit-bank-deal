@@ -1,7 +1,5 @@
 package com.bolotov.creditbankdeal.dto;
 
-import com.bolotov.creditbankdeal.entity.Client;
-import com.bolotov.creditbankdeal.entity.Credit;
 import com.bolotov.creditbankdeal.enums.ApplicationStatus;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -21,8 +19,8 @@ import java.util.UUID;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class StatementDto {
     UUID id;
-    Client client;
-    Credit credit;
+    ClientDto client;
+    CreditDto credit;
     ApplicationStatus status;
     LocalDateTime creationDate;
     LoanOfferDto appliedOffer;
