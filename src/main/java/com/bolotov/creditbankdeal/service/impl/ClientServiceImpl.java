@@ -13,6 +13,7 @@ import com.bolotov.creditbankdeal.service.EmploymentService;
 import com.bolotov.creditbankdeal.service.PassportService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
@@ -32,6 +33,7 @@ public class ClientServiceImpl implements ClientService {
 
     private final EmploymentMapper employmentMapper;
 
+    @Transactional
     @Override
     public Client createClient(com.bolotov.creditbankdeal.dto.ClientDto clientDto) {
         if (clientDto.getPassport() != null) {
@@ -55,6 +57,7 @@ public class ClientServiceImpl implements ClientService {
                 );
     }
 
+    @Transactional
     @Override
     public void updateClient(UUID id, com.bolotov.creditbankdeal.dto.ClientDto clientDto) {
         Client client = findClient(id);

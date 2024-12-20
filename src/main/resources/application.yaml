@@ -4,14 +4,15 @@ spring:
     username: postgres
     password: postgres
   jpa:
-    show-sql: true
+    show-sql: false
     hibernate:
       ddl-auto: update
 server:
   port: 8081
 
-credit-bank:
-  services:
-    calculator:
-      base:
-        uri: http://localhost:8080
+feign:
+  client:
+    config:
+      calculator:
+        name: calculator-client
+        url: http://localhost:8080/calculator

@@ -1,6 +1,6 @@
 package com.bolotov.creditbankdeal.controller;
 
-import com.bolotov.creditbankdeal.client.CalculatorRestClient;
+import com.bolotov.creditbankdeal.client.CalculatorClient;
 import com.bolotov.creditbankdeal.dto.ClientDto;
 import com.bolotov.creditbankdeal.dto.CreditDto;
 import com.bolotov.creditbankdeal.dto.FinishRegistrationRequestDto;
@@ -14,7 +14,6 @@ import com.bolotov.creditbankdeal.mapper.ClientMapper;
 import com.bolotov.creditbankdeal.mapper.ScoringDataMapper;
 import com.bolotov.creditbankdeal.mapper.StatementMapper;
 import com.bolotov.creditbankdeal.service.ClientService;
-import com.bolotov.creditbankdeal.service.CreditService;
 import com.bolotov.creditbankdeal.service.OfferService;
 import com.bolotov.creditbankdeal.service.StatementService;
 import lombok.RequiredArgsConstructor;
@@ -39,7 +38,7 @@ public class DealController {
 
     private final OfferService offerService;
 
-    private final CalculatorRestClient calculatorRestClient;
+    private final CalculatorClient calculatorClient;
 
     private final ClientMapper clientMapper;
 
@@ -54,7 +53,7 @@ public class DealController {
 
         Statement createdStatement = statementService.createStatement(statementToCreate);
 
-        List<LoanOfferDto> offers = calculatorRestClient.getOffers(requestDto);
+        List<LoanOfferDto> offers = calculatorClient.getOffers(requestDto);
         offerService.setStatementId(createdStatement.getId(), offers);
 
         return ResponseEntity.ok(offers);
@@ -81,7 +80,7 @@ public class DealController {
         ScoringDataDto scoringDataDto = ScoringDataMapper.INSTANCE.StatementDtoToScoringDataDto(
                 statementMapper.toDto(statement));
 
-        CreditDto creditDto = calculatorRestClient.getCredit(scoringDataDto);
+        CreditDto creditDto = calculatorClient.getCredit(scoringDataDto);
         creditDto.setCreditStatus(CreditStatus.CALCULATED);
 
         StatementDto statementToUpdate = statementMapper.toDto(statement);
